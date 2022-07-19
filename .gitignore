@@ -1,7 +1,9 @@
 .dll
 .json
+.v1
 .v2
 .lock
 .vsidx
+.g.cs
 .pdb
 .cache
