@@ -30,6 +30,8 @@
         {
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.ConnectionGroupBox = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.Server = new System.Windows.Forms.TextBox();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.CredentialsGroupBox = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,8 +41,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ConnectionType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ConnectionDataSource = new System.Windows.Forms.TextBox();
             this.GenerateCodeGroupBox = new System.Windows.Forms.GroupBox();
+            this.CatalogComboBox = new System.Windows.Forms.ComboBox();
             this.GenerateCodeButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.NameSpace = new System.Windows.Forms.TextBox();
@@ -53,32 +55,48 @@
             // 
             // OutputBox
             // 
-            this.OutputBox.Location = new System.Drawing.Point(472, 12);
+            this.OutputBox.Location = new System.Drawing.Point(262, 12);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ReadOnly = true;
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(683, 571);
+            this.OutputBox.Size = new System.Drawing.Size(893, 571);
             this.OutputBox.TabIndex = 3;
             // 
             // ConnectionGroupBox
             // 
+            this.ConnectionGroupBox.Controls.Add(this.label7);
+            this.ConnectionGroupBox.Controls.Add(this.Server);
             this.ConnectionGroupBox.Controls.Add(this.ConnectButton);
             this.ConnectionGroupBox.Controls.Add(this.CredentialsGroupBox);
             this.ConnectionGroupBox.Controls.Add(this.label3);
             this.ConnectionGroupBox.Controls.Add(this.ConnectionType);
-            this.ConnectionGroupBox.Controls.Add(this.label1);
-            this.ConnectionGroupBox.Controls.Add(this.ConnectionDataSource);
             this.ConnectionGroupBox.Location = new System.Drawing.Point(12, 12);
             this.ConnectionGroupBox.Name = "ConnectionGroupBox";
-            this.ConnectionGroupBox.Size = new System.Drawing.Size(454, 289);
+            this.ConnectionGroupBox.Size = new System.Drawing.Size(244, 327);
             this.ConnectionGroupBox.TabIndex = 4;
             this.ConnectionGroupBox.TabStop = false;
             this.ConnectionGroupBox.Text = "Connection";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(4, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 15);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Server";
+            // 
+            // Server
+            // 
+            this.Server.Location = new System.Drawing.Point(7, 37);
+            this.Server.Name = "Server";
+            this.Server.Size = new System.Drawing.Size(207, 23);
+            this.Server.TabIndex = 10;
+            // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(6, 233);
+            this.ConnectButton.Location = new System.Drawing.Point(7, 233);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(207, 23);
             this.ConnectButton.TabIndex = 9;
@@ -93,7 +111,7 @@
             this.CredentialsGroupBox.Controls.Add(this.ConnectionPassword);
             this.CredentialsGroupBox.Controls.Add(this.Username);
             this.CredentialsGroupBox.Enabled = false;
-            this.CredentialsGroupBox.Location = new System.Drawing.Point(6, 110);
+            this.CredentialsGroupBox.Location = new System.Drawing.Point(7, 110);
             this.CredentialsGroupBox.Name = "CredentialsGroupBox";
             this.CredentialsGroupBox.Size = new System.Drawing.Size(207, 117);
             this.CredentialsGroupBox.TabIndex = 8;
@@ -120,7 +138,7 @@
             // 
             // ConnectionPassword
             // 
-            this.ConnectionPassword.Location = new System.Drawing.Point(9, 81);
+            this.ConnectionPassword.Location = new System.Drawing.Point(6, 88);
             this.ConnectionPassword.Name = "ConnectionPassword";
             this.ConnectionPassword.PasswordChar = '*';
             this.ConnectionPassword.Size = new System.Drawing.Size(190, 23);
@@ -136,7 +154,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 63);
+            this.label3.Location = new System.Drawing.Point(7, 63);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(96, 15);
             this.label3.TabIndex = 5;
@@ -148,7 +166,7 @@
             this.ConnectionType.Items.AddRange(new object[] {
             "Integrated Security",
             "Username and Password"});
-            this.ConnectionType.Location = new System.Drawing.Point(6, 81);
+            this.ConnectionType.Location = new System.Drawing.Point(7, 81);
             this.ConnectionType.Name = "ConnectionType";
             this.ConnectionType.Size = new System.Drawing.Size(207, 23);
             this.ConnectionType.TabIndex = 4;
@@ -159,35 +177,39 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 15);
+            this.label1.Size = new System.Drawing.Size(48, 15);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Data Source";
-            // 
-            // ConnectionDataSource
-            // 
-            this.ConnectionDataSource.Location = new System.Drawing.Point(6, 37);
-            this.ConnectionDataSource.Name = "ConnectionDataSource";
-            this.ConnectionDataSource.Size = new System.Drawing.Size(207, 23);
-            this.ConnectionDataSource.TabIndex = 0;
+            this.label1.Text = "Catalog";
             // 
             // GenerateCodeGroupBox
             // 
+            this.GenerateCodeGroupBox.Controls.Add(this.CatalogComboBox);
             this.GenerateCodeGroupBox.Controls.Add(this.GenerateCodeButton);
             this.GenerateCodeGroupBox.Controls.Add(this.label6);
             this.GenerateCodeGroupBox.Controls.Add(this.NameSpace);
             this.GenerateCodeGroupBox.Controls.Add(this.label5);
             this.GenerateCodeGroupBox.Controls.Add(this.TableName);
+            this.GenerateCodeGroupBox.Controls.Add(this.label1);
             this.GenerateCodeGroupBox.Enabled = false;
-            this.GenerateCodeGroupBox.Location = new System.Drawing.Point(12, 307);
+            this.GenerateCodeGroupBox.Location = new System.Drawing.Point(12, 345);
             this.GenerateCodeGroupBox.Name = "GenerateCodeGroupBox";
-            this.GenerateCodeGroupBox.Size = new System.Drawing.Size(454, 276);
+            this.GenerateCodeGroupBox.Size = new System.Drawing.Size(244, 209);
             this.GenerateCodeGroupBox.TabIndex = 5;
             this.GenerateCodeGroupBox.TabStop = false;
             this.GenerateCodeGroupBox.Text = "Generate Code";
             // 
+            // CatalogComboBox
+            // 
+            this.CatalogComboBox.FormattingEnabled = true;
+            this.CatalogComboBox.Location = new System.Drawing.Point(4, 37);
+            this.CatalogComboBox.Name = "CatalogComboBox";
+            this.CatalogComboBox.Size = new System.Drawing.Size(207, 23);
+            this.CatalogComboBox.TabIndex = 12;
+            this.CatalogComboBox.SelectedIndexChanged += new System.EventHandler(this.CatalogComboBox_SelectedIndexChanged);
+            // 
             // GenerateCodeButton
             // 
-            this.GenerateCodeButton.Location = new System.Drawing.Point(6, 119);
+            this.GenerateCodeButton.Location = new System.Drawing.Point(4, 154);
             this.GenerateCodeButton.Name = "GenerateCodeButton";
             this.GenerateCodeButton.Size = new System.Drawing.Size(205, 23);
             this.GenerateCodeButton.TabIndex = 6;
@@ -198,7 +220,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 63);
+            this.label6.Location = new System.Drawing.Point(7, 107);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 15);
             this.label6.TabIndex = 4;
@@ -206,7 +228,7 @@
             // 
             // NameSpace
             // 
-            this.NameSpace.Location = new System.Drawing.Point(7, 81);
+            this.NameSpace.Location = new System.Drawing.Point(6, 125);
             this.NameSpace.Name = "NameSpace";
             this.NameSpace.Size = new System.Drawing.Size(206, 23);
             this.NameSpace.TabIndex = 2;
@@ -214,7 +236,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 19);
+            this.label5.Location = new System.Drawing.Point(6, 63);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 15);
             this.label5.TabIndex = 1;
@@ -223,7 +245,7 @@
             // TableName
             // 
             this.TableName.FormattingEnabled = true;
-            this.TableName.Location = new System.Drawing.Point(6, 37);
+            this.TableName.Location = new System.Drawing.Point(6, 81);
             this.TableName.Name = "TableName";
             this.TableName.Size = new System.Drawing.Size(207, 23);
             this.TableName.TabIndex = 0;
@@ -257,7 +279,6 @@
         private Label label2;
         private Label label1;
         private TextBox ConnectionPassword;
-        private TextBox ConnectionDataSource;
         private Label label4;
         private TextBox Username;
         private Button ConnectButton;
@@ -268,5 +289,8 @@
         private Label label5;
         private ComboBox TableName;
         private Button GenerateCodeButton;
+        private Label label7;
+        private TextBox Server;
+        private ComboBox CatalogComboBox;
     }
 }

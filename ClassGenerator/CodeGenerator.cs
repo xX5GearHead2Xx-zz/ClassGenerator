@@ -47,14 +47,22 @@ namespace ClassGenerator
                     case "bit":
                         DataType = "bool";
                         break;
+                    case "nvarchar":
                     case "varchar":
                         DataType = "string";
                         break;
+                    case "bigint":
                     case "int":
                         DataType = "int";
                         break;
                     case "datetime":
                         DataType = "DateTime";
+                        break;
+                    case "decimal":
+                        DataType = "decimal";
+                        break;
+                    default:
+                        DataType = "string";
                         break;
                 }
                 TableProperty property = new TableProperty(ColumnName, DataType, PropertyName);
@@ -71,9 +79,12 @@ namespace ClassGenerator
             GenerateProperties();
             GenerateConstructor();
             GenerateDeleteMethod();
+            GenerateExists();
             GenerateReadMethod();
             GenerateDataToClassMethod();
             GenerateSave();
+            GenerateMethodsSection();
+            AppendLine(" }");
             AppendLine(" }");
             AppendLine(" }");
 
@@ -99,7 +110,7 @@ namespace ClassGenerator
             AppendLine(@"StringBuilder Sql = new StringBuilder();");
             AppendLine(@"Key = Guid.NewGuid().ToString();");
 
-            AppendLine(string.Format(@"Sql.Append(""insert into [{0}]"")", ClassName));
+            AppendLine(string.Format(@"Sql.Append(""insert into [{0}] ("");", ClassName));
             foreach (TableProperty Property in Properties)
             {
                 AppendLine(string.Format(@"Sql.Append("" {0}, "");", Property.PropertyName));
@@ -121,7 +132,7 @@ namespace ClassGenerator
                         AppendLine(string.Format(@"Sql.Append("" "" + {0} + "", "");", Property.PropertyName));
                         break;
                     case "bool":
-                        AppendLine(string.Format(@"Sql.Append("" Convert.toInt32("" + {0} + ""), "");", Property.PropertyName));
+                        AppendLine(string.Format(@"Sql.Append("" Convert.ToInt32("" + {0} + ""), "");", Property.PropertyName));
                         break;
                     case "DateTime":
                         AppendLine(string.Format(@"Sql.Append("" '"" + {0}.ToDBDate() + ""', "");", Property.PropertyName));
@@ -154,7 +165,7 @@ namespace ClassGenerator
                         AppendLine(string.Format(@"Sql.Append("" {0} = "" + {1} + "", "");", Property.ColumnName, Property.PropertyName));
                         break;
                     case "bool":
-                        AppendLine(string.Format(@"Sql.Append("" {0} = Convert.toInt32("" + {1} + ""), "");", Property.ColumnName, Property.PropertyName));
+                        AppendLine(string.Format(@"Sql.Append("" {0} = Convert.ToInt32("" + {1} + ""), "");", Property.ColumnName, Property.PropertyName));
                         break;
                     case "DateTime":
                         AppendLine(string.Format(@"Sql.Append("" {0} = '"" + {1}.ToDBDate() + ""', "");", Property.ColumnName, Property.PropertyName));
@@ -220,6 +231,23 @@ namespace ClassGenerator
             AppendLine(@"}");
         }
 
+        private void GenerateExists()
+        {
+            AppendLine(@"public bool Exists()");
+            AppendLine(@"{");
+            AppendLine(@"try");
+            AppendLine(@"{");
+            AppendLine(@"StringBuilder Sql = new StringBuilder();");
+            AppendLine(string.Format(@"throw new NotImplementedException(""Models > {0} > Exists "");", ClassName));
+            AppendLine(@"return Convert.ToInt32(ExecuteScalar(Sql.ToString())) > 0;");
+            AppendLine(@"}");
+            AppendLine(@"catch (Exception Ex)");
+            AppendLine(@"{");
+            AppendLine(string.Format(@"throw new Exception(""Models > {0} > Exists "" + Ex.Message);", ClassName));
+            AppendLine(@"}");
+            AppendLine(@"}");
+        }
+
         private void GenerateReadMethod()
         {
             AppendLine(@"public static DataRow Read(string Key)");
@@ -227,13 +255,7 @@ namespace ClassGenerator
             AppendLine(@"try");
             AppendLine(@"{");
             AppendLine(@"StringBuilder Sql = new StringBuilder();");
-            AppendLine(@"Sql.Append("" select"");");
-            foreach (TableProperty Property in Properties)
-            {
-                AppendLine(string.Format(@"Sql.Append("" {0}, "");", Property.ColumnName));
-            }
-            RemoveLastComma();
-            AppendLine(string.Format(@"Sql.Append("" from [{0}]"");", ClassName));
+            AppendLine(@"  Sql.Append(Methods.GetReadSql());");
             AppendLine(string.Format(@"Sql.Append("" where {0} = '"" + Key.SanitizeInput() + ""'"");", Properties.First().ColumnName));
             AppendLine(@"return ReadDataRow(Sql.ToString());");
             AppendLine(@"}");
@@ -246,7 +268,7 @@ namespace ClassGenerator
 
         private void GenerateDataToClassMethod()
         {
-            AppendLine(@"public bool DataRowToClass(DataRow Data)");
+            AppendLine(@"public void DataRowToClass(DataRow Data)");
             AppendLine(@"{");
             AppendLine(@"try");
             AppendLine(@"{");
@@ -258,10 +280,10 @@ namespace ClassGenerator
                         AppendLine(string.Format(@"{0} = Data[""{1}""].ToString();", Property.PropertyName, Property.ColumnName));
                         break;
                     case "int":
-                        AppendLine(string.Format(@"{0} = Convert.toInt32(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
+                        AppendLine(string.Format(@"{0} = Convert.ToInt32(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
                         break;
                     case "decimal":
-                        AppendLine(string.Format(@"{0} = Convert.toDecimal(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
+                        AppendLine(string.Format(@"{0} = Convert.ToDecimal(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
                         break;
                     case "float":
                     case "double":
@@ -277,12 +299,29 @@ namespace ClassGenerator
                         throw new Exception("Unhandled data type encountered in GenerateDataToClass");
                 }
             }
-            AppendLine(@"return true;");
             AppendLine(@"}");
             AppendLine(@"catch (Exception Ex)");
             AppendLine(@"{");
             AppendLine(string.Format(@"throw new Exception(""Models > {0} > DataRowToClass "" + Ex.Message);", ClassName));
             AppendLine(@"}");
+            AppendLine(@"}");
+        }
+
+        private void GenerateMethodsSection()
+        {
+            AppendLine(@"public class Methods");
+            AppendLine(@"{");
+            AppendLine(@"public static string GetReadSql()");
+            AppendLine(@"{");
+            AppendLine(@"StringBuilder Sql = new StringBuilder(); ");
+            AppendLine(@"Sql.Append("" select"");");
+            foreach (TableProperty Property in Properties)
+            {
+                AppendLine(string.Format(@"Sql.Append("" {0}, "");", Property.ColumnName));
+            }
+            RemoveLastComma();
+            AppendLine(string.Format(@"Sql.Append("" from {0}"");", ClassName));
+            AppendLine(@"return Sql.ToString();");
             AppendLine(@"}");
         }
 

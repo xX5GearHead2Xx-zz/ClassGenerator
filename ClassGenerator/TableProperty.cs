@@ -30,6 +30,7 @@ namespace ClassGenerator
                 case "char":
                 case "varchar":
                 case "text":
+                case "string":
                     return @"""""";
                 case "nchar":
                 case "ntext":
@@ -62,7 +63,7 @@ namespace ClassGenerator
 
         private string ConvertSqlDataTypeToCSharpDataType()
         {
-            switch (SqlDataType)
+            switch (SqlDataType.ToLower())
             {
                 case "char":
                 case "varchar":
@@ -70,6 +71,7 @@ namespace ClassGenerator
                 case "nchar":
                 case "ntext":
                 case "ncarchar":
+                case "string":
                     return "string";
                 case "bigint":
                 case "smallint":

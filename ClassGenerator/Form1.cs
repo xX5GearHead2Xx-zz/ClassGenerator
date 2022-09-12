@@ -10,7 +10,6 @@ namespace ClassGenerator
         public Form1()
         {
             InitializeComponent();
-            ConnectionDataSource.Focus();
         }
 
         private void ConnectionType_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,8 +28,9 @@ namespace ClassGenerator
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
+            CatalogComboBox.Items.Clear();
             bool ValidationError = false;
-            ValidationError = string.IsNullOrEmpty(ConnectionDataSource.Text) ? true : ValidationError;
+            ValidationError = string.IsNullOrEmpty(Server.Text) ? true : ValidationError;
             ValidationError = ConnectionType.SelectedIndex == -1 ? true : ValidationError;
             if (ValidationError)
             {
@@ -39,7 +39,7 @@ namespace ClassGenerator
             else
             {
                 sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
-                sqlConnectionStringBuilder.DataSource = ConnectionDataSource.Text;
+                sqlConnectionStringBuilder.DataSource = Server.Text;
                 sqlConnectionStringBuilder.IntegratedSecurity = ConnectionType.SelectedIndex == 0 ? true : false;
 
                 if (ConnectionType.SelectedIndex == 1)
@@ -49,14 +49,20 @@ namespace ClassGenerator
                 }
 
                 SqlHandler Sql = new SqlHandler(sqlConnectionStringBuilder.ConnectionString);
-                DataTable Tables = Sql.ReadDataTable("SELECT TABLE_NAME FROM information_schema.tables");
-                foreach (DataRow Table in Tables.Rows)
+                var Catalogs = Sql.ReadDataTable("SELECT name FROM sys.databases order by name");
+                if (Catalogs != null)
                 {
-                    TableName.Items.Add(Table["Table_Name"].ToString());
+                    foreach (DataRow Table in Catalogs.Rows)
+                    {
+                        CatalogComboBox.Items.Add(Table["name"].ToString());
+                    }
+
+                    GenerateCodeGroupBox.Enabled = true;
                 }
-                GenerateCodeGroupBox.Enabled = true;
             }
         }
+
+
 
         private void GenerateCodeButton_Click(object sender, EventArgs e)
         {
@@ -78,13 +84,32 @@ namespace ClassGenerator
                     Sql.Append(" FROM INFORMATION_SCHEMA.COLUMNS");
                     Sql.Append(" WHERE TABLE_NAME = N'" + Table + "'");
                     SqlHandler SqlHandler = new SqlHandler(sqlConnectionStringBuilder.ConnectionString);
-                    DataTable Columns = SqlHandler.ReadDataTable(Sql.ToString());
-                    CodeGenerator Generator = new CodeGenerator(Table, NameSpace.Text, Columns);
-                    OutputBox.Text = Generator.GenerateClass();
+                    var Columns = SqlHandler.ReadDataTable(Sql.ToString());
+                    if(Columns != null)
+                    {
+                        CodeGenerator Generator = new CodeGenerator(Table, NameSpace.Text, Columns);
+                        OutputBox.Text = Generator.GenerateClass();
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Connection string is empty");
+                }
+            }
+        }
+
+        private void CatalogComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TableName.Items.Clear();
+            sqlConnectionStringBuilder.InitialCatalog = CatalogComboBox.SelectedItem.ToString();
+            SqlHandler Sql = new SqlHandler(sqlConnectionStringBuilder.ConnectionString);
+
+            var Tables = Sql.ReadDataTable("SELECT TABLE_NAME FROM information_schema.tables order by TABLE_NAME");
+            if(Tables != null)
+            {
+                foreach (DataRow Table in Tables.Rows)
+                {
+                    TableName.Items.Add(Table["Table_Name"].ToString());
                 }
             }
         }

@@ -13,7 +13,7 @@ namespace ClassGenerator
             this.ConnectionString = ConnectionString;
         }
 
-        public DataTable ReadDataTable(string Query)
+        public DataTable? ReadDataTable(string Query)
         {
             try
             {
@@ -34,7 +34,8 @@ namespace ClassGenerator
             }
             catch (Exception Ex)
             {
-                throw new Exception("DataHandler > Sqlhandler > Read " + Ex.Message);
+                MessageBox.Show("DataHandler > Sqlhandler > Read " + Ex.Message);
+                return null;
             }
         }
 
