@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L9YVmffLeOkN7Oq5oNgltP/tTXyr6/pbK7p+7SDOCfYC02a73iOPooccTlG26Et4vQ82siVsqUIGFXxE44X4Dg==",
+  "dgSpecHash": "eHxuAZNLrgt0uivYrgATX/Nhy6D5YDWNwR/C3PFQdfkaiMQTdPPlAlHh+0OZDB0k2O0BNm0aWeOz7NKK2uRP1g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\joshu\\OneDrive\\Documents\\Visual Studio 2022\\Projects\\Personal\\ClassGenerator\\ClassGenerator\\ClassGenerator.csproj",
+  "projectFilePath": "C:\\Users\\joshu\\source\\repos\\Personal\\ClassGenerator\\ClassGenerator\\ClassGenerator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\joshu\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\joshu\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

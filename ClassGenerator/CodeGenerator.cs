@@ -113,8 +113,9 @@ namespace ClassGenerator
             AppendLine(string.Format(@"Sql.Append(""insert into [{0}] ("");", ClassName));
             foreach (TableProperty Property in Properties)
             {
-                AppendLine(string.Format(@"Sql.Append("" {0}, "");", Property.PropertyName));
+                AppendLine(string.Format(@"Sql.Append("" {0}, "");", Property.ColumnName));
             }
+            RemoveLastComma();
             AppendLine(@"Sql.Append("" ) values ("");");
             foreach (TableProperty Property in Properties)
             {
@@ -188,11 +189,11 @@ namespace ClassGenerator
 
         private void GenerateConstructor()
         {
-            AppendLine(string.Format(@"public {0}(string Key = """")", ClassName));
+            AppendLine(string.Format(@"public {0}(string key = """")", ClassName));
             AppendLine(@"{");
             AppendLine(@"try");
             AppendLine(@"{");
-            AppendLine(@"if (string.IsNullOrEmpty(Key))");
+            AppendLine(@"if (string.IsNullOrEmpty(key))");
             AppendLine(@"{");
 
             foreach (TableProperty Property in Properties)
@@ -203,7 +204,7 @@ namespace ClassGenerator
             AppendLine(@"}");
             AppendLine(@"else");
             AppendLine(@"{");
-            AppendLine(@"DataRowToClass(Read(Key));");
+            AppendLine(@"DataRowToClass(Read(key));");
             AppendLine(@"}");
             AppendLine(@"}");
             AppendLine(@"catch (Exception Ex)");
@@ -215,14 +216,17 @@ namespace ClassGenerator
 
         private void GenerateDeleteMethod()
         {
-            AppendLine(@"public bool Delete()");
+            AppendLine(@"public void Delete()");
             AppendLine(@"{");
             AppendLine(@"try");
+            AppendLine(@"{");
+            AppendLine(@"if (!string.IsNullOrEmpty(Key))");
             AppendLine(@"{");
             AppendLine(@"StringBuilder Sql = new StringBuilder();");
             AppendLine(string.Format(@"Sql.Append("" delete from [{0}] "");", ClassName));
             AppendLine(string.Format(@"Sql.Append("" where {0} = '"" + Key.SanitizeInput() + ""'"");", Properties.First().ColumnName));
-            AppendLine(@"return ExecuteNonQuery(Sql.ToString());");
+            AppendLine(@"ExecuteNonQuery(Sql.ToString());");
+            AppendLine(@"}");
             AppendLine(@"}");
             AppendLine(@"catch (Exception Ex)");
             AppendLine(@"{");

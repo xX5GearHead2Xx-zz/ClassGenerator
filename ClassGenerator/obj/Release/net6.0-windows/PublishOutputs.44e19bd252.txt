@@ -1,0 +1,11 @@
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\ClassGenerator.exe
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\ClassGenerator.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\ClassGenerator.deps.json
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\ClassGenerator.runtimeconfig.json
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\ClassGenerator.pdb
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\System.Data.SqlClient.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\runtimes\win-arm64\native\sni.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\runtimes\win-x64\native\sni.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\runtimes\win-x86\native\sni.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\joshu\source\repos\Personal\ClassGenerator\ClassGenerator\bin\Release\net6.0-windows\publish\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
