@@ -133,7 +133,7 @@ namespace ClassGenerator
                         AppendLine(string.Format(@"Sql.Append("" "" + {0} + "", "");", Property.PropertyName));
                         break;
                     case "bool":
-                        AppendLine(string.Format(@"Sql.Append("" Convert.ToInt32("" + {0} + ""), "");", Property.PropertyName));
+                        AppendLine(string.Format(@"Sql.Append("" "" + Convert.ToInt32({0}) + "", "");", Property.PropertyName));
                         break;
                     case "DateTime":
                         AppendLine(string.Format(@"Sql.Append("" '"" + {0}.ToDBDate() + ""', "");", Property.PropertyName));
@@ -166,7 +166,7 @@ namespace ClassGenerator
                         AppendLine(string.Format(@"Sql.Append("" {0} = "" + {1} + "", "");", Property.ColumnName, Property.PropertyName));
                         break;
                     case "bool":
-                        AppendLine(string.Format(@"Sql.Append("" {0} = Convert.ToInt32("" + {1} + ""), "");", Property.ColumnName, Property.PropertyName));
+                        AppendLine(string.Format(@"Sql.Append("" {0} = "" + Convert.ToInt32({1}) + "", "");", Property.ColumnName, Property.PropertyName));
                         break;
                     case "DateTime":
                         AppendLine(string.Format(@"Sql.Append("" {0} = '"" + {1}.ToDBDate() + ""', "");", Property.ColumnName, Property.PropertyName));
@@ -291,13 +291,13 @@ namespace ClassGenerator
                         break;
                     case "float":
                     case "double":
-                        AppendLine(string.Format(@"{0} = Convert.toDouble(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
+                        AppendLine(string.Format(@"{0} = Convert.ToDouble(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
                         break;
                     case "bool":
-                        AppendLine(string.Format(@"{0} = Convert.toBoolean(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
+                        AppendLine(string.Format(@"{0} = Convert.ToBoolean(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
                         break;
                     case "DateTime":
-                        AppendLine(string.Format(@"{0} = Convert.toDateTime(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
+                        AppendLine(string.Format(@"{0} = Convert.ToDateTime(Data[""{1}""].ToString());", Property.PropertyName, Property.ColumnName));
                         break;
                     default:
                         throw new Exception("Unhandled data type encountered in GenerateDataToClass");
